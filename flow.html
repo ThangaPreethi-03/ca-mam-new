@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Initializing</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <button id="themeToggle" class="theme-toggle">🌙</button>
+
+  <!-- SCREEN 1 : LOADING -->
+  <section class="screen active" id="screen1">
+    <h2>Initializing System...</h2>
+    <p id="loadingText">Verifying credentials...</p>
+  </section>
+
+  <!-- SCREEN 1.5 : LOADER -->
+<section class="screen" id="screenLoader">
+  <div class="loader"></div>
+  <p class="loader-text">Finalizing experience…</p>
+</section>
+
+
+  <!-- SCREEN 2 : SUSPICIOUSLY POSITIVE -->
+  <section class="screen" id="screen2">
+    <h2>Status Update</h2>
+    <p>All unnecessary stress successfully removed.</p>
+    <button onclick="nextScreen(3)">Continue</button>
+  </section>
+
+  <!-- SCREEN 3 : REVEAL -->
+  <section class="screen" id="screen3">
+    <h2>System Notice ⚠</h2>
+    <p>This is not a real portal.</p>
+    <p class="highlight">It’s a New Year Message 🎉</p>
+    <button onclick="nextScreen(4)">Proceed</button>
+  </section>
+
+  <!-- SCREEN 4 : SMART HUMOR -->
+  <section class="screen" id="screen4">
+    <h2>Welcome to 2025</h2>
+    <ul class="humor-list">
+      <li>✔ Old syllabus deprecated</li>
+      <li>✔ New goals pushed to production</li>
+      <li>✔ Happiness uptime set to 99.9%</li>
+      <li>✔ Errors reduced, learning increased</li>
+    </ul>
+    <button onclick="nextScreen(5)">Final Message</button>
+  </section>
+
+  <!-- SCREEN 5 : NEW YEAR WISH -->
+<section class="screen" id="screen5">
+  <h1>🎆 Happy New Year 2026 🎆</h1>
+
+  <div class="mam-card">
+    <p id="finalMessage">
+      Happy New 👂 2026, Mam 🥳
+      <br><br>
+      2025 full-ah 63 peraiyum mechu, romba periya paadu pattenga mam.
+      Indha 2026-um ungalukku andha maadhiriye amaiya,
+      nu manasaaru vaazhthukirom mam.
+      <br><br>
+      Ungaloda kadina ulaippukku palan kandippa kidaikkum mam.
+      Engala course panna vachadhu, competition panna vachadhu,
+      college-ku daily vara vachadhu, padikka vachadhu —
+      ivlo engalukkaaga panna ungalukku
+      <strong>naanga students-aa kidaichadhe oru periya gift</strong> mam.
+      <br><br>
+      Neenga romba hard-working person mam 🥳
+      <br><br>
+      2026-la naanga <strong>3 per + neenga</strong>
+      serndhu perusaa saadhikkaporaom mam.
+      Idhu dhaan namma latchiyam.
+      <br><br>
+      Kandippa <strong>vera level-ah pannrom mam</strong> 💪
+      <br><br>
+      Indha ulagathukku
+      <strong>“naama yaaru” nu kaata vendiya varusham
+      idhu dhaan mam</strong> ✨
+    </p>
+  </div>
+
+  <p class="signature">— With gratitude, Your Students 🤍</p>
+
+  <button class="replay-btn" onclick="replayExperience()">
+    🔁 Replay Experience
+  </button>
+</section>
+
+
+  <script src="js/app.js"></script>
+</body>
+</html>
