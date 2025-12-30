@@ -1,3 +1,4 @@
+/* ================= LOGIN ================= */
 function login() {
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
@@ -18,19 +19,18 @@ function login() {
     setTimeout(() => {
       window.location.href = "flow.html";
     }, 300);
-
   } else {
-    errorText.textContent = "Access denied. Invalid credentials.";
+    errorText.textContent = "Access denied. Authorized user only.";
     showEmoji();
   }
 }
 
-
-/* ---------------- GLOBAL STATE ---------------- */
+/* ================= GLOBAL STATE ================= */
 let current = 1;
 let loadingInterval = null;
+let loadingText = null;
 
-/* ---------------- LOADING TEXT ---------------- */
+/* ================= LOADING SEQUENCE ================= */
 function startLoadingMessages() {
   if (!loadingText) return;
 
@@ -44,44 +44,38 @@ function startLoadingMessages() {
   const typingSpeed = 50;
   const pauseAfterTyping = 700;
 
-  // Clear old timer
   if (loadingInterval) clearTimeout(loadingInterval);
 
   let msgIndex = 0;
 
   function showMessageSequentially() {
     if (msgIndex >= messages.length) {
-      // All messages done → loader
-      document.getElementById("screen1").classList.remove("active");
-      document.getElementById("screenLoader").classList.add("active");
+      // Show loader screen
+      document.getElementById("screen1")?.classList.remove("active");
+      document.getElementById("screenLoader")?.classList.add("active");
 
       setTimeout(() => {
-        document.getElementById("screenLoader").classList.remove("active");
+        document.getElementById("screenLoader")?.classList.remove("active");
         nextScreen(2);
       }, 2000);
 
       return;
     }
 
-    // Type current message
     loadingText.innerHTML = messages[msgIndex];
     typeText(loadingText, typingSpeed);
 
-    // Calculate exact time for this message
-    const messageDuration =
+    const duration =
       messages[msgIndex].length * typingSpeed + pauseAfterTyping;
 
     msgIndex++;
-
-    loadingInterval = setTimeout(showMessageSequentially, messageDuration);
+    loadingInterval = setTimeout(showMessageSequentially, duration);
   }
 
-  // Start clean
   showMessageSequentially();
 }
 
-
-/* ---------------- SCREEN NAVIGATION ---------------- */
+/* ================= SCREEN NAVIGATION ================= */
 function nextScreen(next) {
   const currentScreen = document.getElementById(`screen${current}`);
   const nextScreenEl = document.getElementById(`screen${next}`);
@@ -97,18 +91,17 @@ function nextScreen(next) {
     showEmoji();
 
     if (next === 5) {
-  startConfetti();
+      startConfetti();
 
-  const msg = document.getElementById("finalMessage");
-  if (msg) {
-    typeText(msg, 35);
-  }
-}
-
+      const msg = document.getElementById("finalMessage");
+      if (msg) {
+        typeText(msg, 35);
+      }
+    }
   }, 300);
 }
 
-/* ---------------- CONFETTI ---------------- */
+/* ================= CONFETTI ================= */
 function startConfetti() {
   const colors = ["#ff0a54", "#ff477e", "#ff85a1", "#fbb1bd", "#f9bec7", "#ffffff"];
 
@@ -124,15 +117,15 @@ function startConfetti() {
       Math.random() * 8 + 5 + "px";
 
     document.body.appendChild(confetti);
-
     setTimeout(() => confetti.remove(), 5000);
   }
 }
 
-/* ---------------- THEME TOGGLE ---------------- */
+/* ================= THEME TOGGLE ================= */
 document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("themeToggle");
+  loadingText = document.getElementById("loadingText");
 
+  const toggle = document.getElementById("themeToggle");
   if (toggle) {
     toggle.addEventListener("click", () => {
       document.body.classList.toggle("light");
@@ -140,33 +133,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  startLoadingMessages();
+  // Start loading only on flow page
+  if (loadingText) {
+    startLoadingMessages();
+  }
 });
 
-/* ---------------- EMOJI MICRO INTERACTION ---------------- */
+/* ================= EMOJI MICRO INTERACTION ================= */
 function showEmoji() {
   const emojis = ["😄", "✨", "🎉", "😊", "🎆", "💫"];
   const emoji = document.createElement("div");
 
   emoji.classList.add("emoji");
   emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
   emoji.style.left = Math.random() * 90 + "vw";
   emoji.style.top = Math.random() * 80 + "vh";
 
   document.body.appendChild(emoji);
-
   setTimeout(() => emoji.remove(), 1400);
 }
 
-/* ---------------- TYPEWRITER ---------------- */
+/* ================= TYPEWRITER (HTML SAFE) ================= */
 function typeText(element, speed = 35) {
   const html = element.innerHTML;
   element.innerHTML = "";
 
   let i = 0;
   let isTag = false;
-  let textBuffer = "";
+  let buffer = "";
 
   function type() {
     if (i >= html.length) return;
@@ -175,14 +169,14 @@ function typeText(element, speed = 35) {
 
     if (char === "<") {
       isTag = true;
-      textBuffer += char;
+      buffer += char;
     } else if (char === ">") {
       isTag = false;
-      textBuffer += char;
-      element.innerHTML += textBuffer;
-      textBuffer = "";
+      buffer += char;
+      element.innerHTML += buffer;
+      buffer = "";
     } else if (isTag) {
-      textBuffer += char;
+      buffer += char;
     } else {
       element.innerHTML += char;
     }
@@ -194,8 +188,7 @@ function typeText(element, speed = 35) {
   type();
 }
 
-
-/* ---------------- PARTICLES ---------------- */
+/* ================= PARTICLES BACKGROUND ================= */
 const canvas = document.getElementById("particles");
 if (canvas) {
   const ctx = canvas.getContext("2d");
@@ -241,14 +234,12 @@ if (canvas) {
   animateParticles();
 }
 
-/* ---------------- REPLAY ---------------- */
+/* ================= REPLAY ================= */
 function replayExperience() {
-  document
-    .querySelectorAll(".screen")
-    .forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
 
   current = 1;
-  document.getElementById("screen1").classList.add("active");
+  document.getElementById("screen1")?.classList.add("active");
 
   startLoadingMessages();
   showEmoji();
