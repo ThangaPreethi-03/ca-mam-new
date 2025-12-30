@@ -1,22 +1,26 @@
 function login() {
   const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
   const errorText = document.getElementById("loginError");
 
-  if (!usernameInput) return;
+  if (!usernameInput || !passwordInput) return;
 
   const username = usernameInput.value.trim().toLowerCase();
+  const password = passwordInput.value.trim();
 
-  if (username === "devi sri") {
-    showEmoji();
+  const allowedUsername = "devi sri";
+  const allowedPassword = "1_w1ll_g1v3_g1ft_t0_y0u";
 
+  if (username === allowedUsername && password === allowedPassword) {
     errorText.textContent = "";
+    showEmoji();
 
     setTimeout(() => {
       window.location.href = "flow.html";
     }, 300);
 
   } else {
-    errorText.textContent = "Access restricted. Authorized user only.";
+    errorText.textContent = "Access denied. Invalid credentials.";
     showEmoji();
   }
 }
